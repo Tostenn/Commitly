@@ -87,8 +87,9 @@ class Commitly:
         """
         Internal method to run shell commands. Returns either output or exit code.
         """
-        result = run(cmd, capture_output=True, text=True, shell=True)
-        return result.returncode if return_code else result.stdout.strip()
+        result = run(cmd, capture_output=True, text=True, shell=True,encoding='utf-8',)
+        output = result.stdout or ""
+        return result.returncode if return_code else output.strip()
 
     def push(self):
         """
