@@ -2,3 +2,4 @@ __pycache__/
 *.txt
 test*.*
 har_and_cookies/
+pip/
