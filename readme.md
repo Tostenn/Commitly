@@ -1,7 +1,7 @@
 
 ## 🧠 Le Problème : le syndrome du commit vide
 
-![ullustration du vide](/image/vide.webp)
+![ullustration du vide](images/vide.jpeg)
 
 
 Vous venez de finir une session intense de développement. Vous exécutez fièrement :
@@ -136,7 +136,7 @@ commitly.push()
 
 ## 📸 Démo visuelle
 
-![Exemple complet](./image/exemple-1.png)
+![Exemple complet](images/exemple-1.png)
 
 
 ---
