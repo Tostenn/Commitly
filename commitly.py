@@ -39,7 +39,7 @@ class Commitly:
         """
         return self._run_cmd(f"git add {file}", return_code=True) == 0
 
-    def generate_commit_message(self, style_commit: str = None, format_commit: str = None, recommandation_commit: str = None) -> str:
+    def generate_commit_message(self, style_commit: str = None, format_commit: str = None, recommandation_commit: str = None, ticket: str = None) -> str:
         """
         Generate the commit message using the AI model based on current staged diff.
         """
@@ -52,7 +52,7 @@ class Commitly:
             model=self.model,
             messages=[
                 {"role": "system", "content": self.get_prompt(style_commit, format_commit, recommandation_commit)},
-                {"role": "user", "content": diff}
+                {"role": "user", "content": f"""{{ "diff": "{diff}", "ticket": {ticket}}}"""}
             ],
             web_search=False
         )
