@@ -5,71 +5,99 @@ from subprocess import run
 from pathlib import Path
 from exceptions.diffEmptyException import DiffEmptyException
 
+
 class Commitly:
-    
     """
-    automatically generate a commit message based on the provided diff
+    Commitly automatically generates a commit message based on the current staged changes (diff).
     """
-    
+
     def __init__(self, model=gpt_4o_mini, file_temp="commit.txt"):
+        """
+        Initialize the Commitly client with a model and temporary file to store the message.
+        """
         self.client = Client()
         self.model = model
         self.file_temp = Path(file_temp)
-    
-    def get_value(self, style_commit:str=None, format_commit:str=None, recommandation_commit:str=None):
-        if not style_commit:
-            style_commit = STYLE_COMMIT
-        if not format_commit:
-            format_commit = FORMAT_COMMIT
-        if not recommandation_commit:
-            recommandation_commit = RECOMMANDATION
-        
-        return PROMPT.format(STYLE_COMMIT=style_commit, FORMAT_COMMIT=format_commit, RECOMMANDATION=recommandation_commit)
-        pass
-    
-    def add(self, file:str)-> bool:
-        cmd = self.cmds(f"""git add {file} """, True)
-        return cmd == 0
-    
-    def msg_commit(self, style_commit:str=None, format_commit:str=None, recommandation_commit:str=None)-> str:
-        
-        cmd = self.cmds("git diff --cached")
-        
-        if not cmd.strip():
-            raise DiffEmptyException
-        
+
+    def get_prompt(self, style_commit: str = None, format_commit: str = None, recommandation_commit: str = None) -> str:
+        """
+        Format the system prompt using commit style, format, and custom recommendations.
+        """
+        style_commit = style_commit or STYLE_COMMIT
+        format_commit = format_commit or FORMAT_COMMIT
+        recommandation_commit = recommandation_commit or RECOMMANDATION
+
+        return PROMPT.format(
+            STYLE_COMMIT=style_commit,
+            FORMAT_COMMIT=format_commit,
+            RECOMMANDATION=recommandation_commit
+        )
+
+    def add(self, file: str) -> bool:
+        """
+        Add a file to the git staging area.
+        """
+        return self._run_cmd(f"git add {file}", return_code=True) == 0
+
+    def generate_commit_message(self, style_commit: str = None, format_commit: str = None, recommandation_commit: str = None) -> str:
+        """
+        Generate the commit message using the AI model based on current staged diff.
+        """
+        diff = self._run_cmd("git diff --cached")
+
+        if not diff.strip():
+            raise DiffEmptyException("No changes found in staged files.")
+
         response = self.client.chat.completions.create(
-        # model="gpt-4o-mini",
-        model=self.model,
-        messages=[
-            {"role": "system", "content": self.get_value(style_commit, format_commit, recommandation_commit) },
-            
-            {"role": "user", "content": cmd}
-        ],
-        web_search=False
-    )
-        return response.choices[0].message.content
-    
-    def save_msg_in_file(self, message:str)-> bool:
+            model=self.model,
+            messages=[
+                {"role": "system", "content": self.get_prompt(style_commit, format_commit, recommandation_commit)},
+                {"role": "user", "content": diff}
+            ],
+            web_search=False
+        )
+
+        return response.choices[0].message.content.strip()
+
+    def save_message_to_file(self, message: str) -> bool:
+        """
+        Save the generated commit message into the temporary file.
+        """
         try:
-            with open(self.file_temp, "w", encoding="utf-8") as f:
-                f.write(message.replace('\x00', ''))
+            # Remove null bytes that can cause Git to fail
+            message = message.replace('\x00', '')
+
+            with self.file_temp.open("w", encoding="utf-8", newline='\n') as f:
+                f.write(message)
+
             return True
-        except: return False
-    
-    def commit(self)-> bool:
-        cmd = self.cmds(f"git commit -F {self.file_temp.absolute()}", True)
-        self.file_temp.unlink() # supprimer le fichier
-        return cmd == 0
-    
-    def cmds(self, cmd, code=False):
-        '''exercuter des commande shell'''
-        cmd = run(cmd,capture_output=True,text=True,shell=True)
-        if code: return cmd.returncode
-        return cmd.stdout.strip()
+        except Exception as e:
+            print(f"Error saving commit message: {e}")
+            return False
+
+    def commit(self) -> bool:
+        """
+        Commit changes using the saved message from the temporary file.
+        """
+        success = self._run_cmd(f"git commit -F {self.file_temp.absolute()}", return_code=True) == 0
+        self.file_temp.unlink(missing_ok=True)  # Clean up the temp file
+        return success
+
+    def _run_cmd(self, cmd: str, return_code: bool = False):
+        """
+        Internal method to run shell commands. Returns either output or exit code.
+        """
+        result = run(cmd, capture_output=True, text=True, shell=True)
+        return result.returncode if return_code else result.stdout.strip()
 
     def push(self):
-        self.cmds("git push")
-        
-    def reset(self, file:str):
-        self.cmds("git reset " + file)
+        """
+        Push the latest commit to the remote repository.
+        """
+        self._run_cmd("git push")
+
+    def unstage(self, file: str):
+        """
+        Unstage a file (remove from staging area).
+        """
+        self._run_cmd(f"git reset {file}")
