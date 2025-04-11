@@ -11,13 +11,14 @@ class Commitly:
     Commitly automatically generates a commit message based on the current staged changes (diff).
     """
 
-    def __init__(self, model=gpt_4o_mini, file_temp="commit.txt"):
+    def __init__(self, model=gpt_4o_mini, file_temp="commit.txt", lang="fr"):
         """
         Initialize the Commitly client with a model and temporary file to store the message.
         """
         self.client = Client()
         self.model = model
         self.file_temp = Path(file_temp)
+        self.lang = lang
 
     def get_prompt(self, style_commit: str = None, format_commit: str = None, recommandation_commit: str = None) -> str:
         """
@@ -52,7 +53,7 @@ class Commitly:
             model=self.model,
             messages=[
                 {"role": "system", "content": self.get_prompt(style_commit, format_commit, recommandation_commit)},
-                {"role": "user", "content": f"""{{ "diff": "{diff}", "ticket": {ticket}}}"""}
+                {"role": "user", "content": f"""{{ "diff": "{diff}", "ticket": "{ticket}", "langue": "{self.lang}" }}"""},
             ],
             web_search=False
         )
