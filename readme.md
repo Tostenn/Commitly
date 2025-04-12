@@ -135,7 +135,7 @@ Internal method to run shell commands. Returns either:
 ## 🧪 Full Example
 
 ```python
-from commitly import Commitly
+from commitly.commitly import Commitly
 
 commitly = Commitly()
 commitly.add("main.py")

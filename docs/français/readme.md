@@ -133,7 +133,7 @@ Méthode interne utilisée pour exécuter des commandes shell. Elle peut retourn
 ## 🧪 Exemple complet
 
 ```python
-from commitly import Commitly
+from commitly.commitly import Commitly
 
 commitly = Commitly()
 commitly.add("main.py")
