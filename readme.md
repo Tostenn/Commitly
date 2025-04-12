@@ -1,7 +1,7 @@
 
 ## 🧠 Le Problème : le syndrome du commit vide
 
-![ullustration du vide](images/vide.jpeg)
+![ullustration du vide](https://cdn.jsdelivr.net/gh/Tostenn/Commitly/images/vide.jpeg)
 
 
 Vous venez de finir une session intense de développement. Vous exécutez fièrement :
@@ -136,7 +136,7 @@ commitly.push()
 
 ## 📸 Démo visuelle
 
-![Exemple complet](images/exemple-1.png)
+![Exemple complet](https://cdn.jsdelivr.net/gh/Tostenn/Commitly/images/exemple-1.png)
 
 
 ---
