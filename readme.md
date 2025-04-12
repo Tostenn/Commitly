@@ -27,6 +27,19 @@ No more empty commit syndrome. Commitly gives you a clear, contextual message �
 
 ---
 
+## 📦 Installation
+
+Install Commitly from PyPI:
+
+```bash
+pip install commitly
+```
+
+---
+
+> Make sure you have [Git](https://git-scm.com/) installed and properly configured.
+
+
 ## ⚙️ Features
 
 ### `__init__(model=gpt_4o_mini, file_temp="commit.txt", lang="fr")`
@@ -168,7 +181,3 @@ MIT © 2025 Kouya Chance Boman Tosten
 ---
 
 > Say goodbye to the empty commit syndrome. Let **Commitly** tell your code’s story.
-
----
-
-Dis-moi si tu veux un badge PyPI (une fois publié), ou une version anglaise des images (si nécessaire) !

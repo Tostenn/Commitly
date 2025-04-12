@@ -25,6 +25,19 @@ Fini le syndrome du commit vide. Commitly vous propose un message clair, context
 
 ---
 
+
+## 📦 Installation
+
+Installez Commitly depuis PyPI :
+
+```bash
+pip install commitly
+```
+
+> Assurez-vous d’avoir [Git](https://git-scm.com/) installé et correctement configuré.
+
+---
+
 ## ⚙️ Fonctionnalités
 
 ### `__init__(model=gpt_4o_mini, file_temp="commit.txt", lang="fr")`
