@@ -77,8 +77,7 @@ class Commitly:
         )
         
         content = response.choices[0].message.content.strip()
-        print(content)
-        exit()
+
         if not fact:
             content = {
                 "commit": content,
