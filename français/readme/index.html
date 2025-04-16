@@ -1,0 +1,902 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Générateur de messages de commit intelligents avec l'IA">
+      
+      
+        <meta name="author" content="Kouya Chance Boman Tosten">
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+    
+    
+      
+        <title>Readme - Commitly</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#le-probleme-le-syndrome-du-commit-vide" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="Commitly" class="md-header__button md-logo" aria-label="Commitly" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Commitly
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Readme
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Tostenn/Commitly" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Tostenn/Commitly
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Onglets" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Accueil
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../installation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Installation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../utilisation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Utilisation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../api/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributeurs/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contribuer
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../faq/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  FAQ
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Commitly" class="md-nav__button md-logo" aria-label="Commitly" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Commitly
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Tostenn/Commitly" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Tostenn/Commitly
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Accueil
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utilisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utilisation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributeurs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contribuer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#le-probleme-le-syndrome-du-commit-vide" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 Le Problème : le syndrome du commit vide
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commitly-cest-quoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Commitly, c’est quoi ?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Commitly, c’est quoi ?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 Installation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fonctionnalites-principales" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Fonctionnalités principales
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚙️ Fonctionnalités principales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__modelgpt_4o_mini-file_tempcommittxt-langfr" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 __init__(model=gpt_4o_mini, file_temp="commit.txt", lang="fr")
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addfile-str-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 add(file: str) -&gt; bool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate_commit_message-dict-listdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 generate_commit_message(...) -&gt; dict | List[dict]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save_message_to_filemessage-str-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 save_message_to_file(message: str) -&gt; bool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 commit() -&gt; bool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#push" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 push()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unstagefile-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 unstage(file: str)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file_stage-liststr" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 file_stage() -&gt; List[str]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_run_cmdcmd-str-return_code-bool-false" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 _run_cmd(cmd: str, return_code: bool = False)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-complet" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧪 Exemple complet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-avec-factorisation-intelligente" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 Exemple avec factorisation intelligente
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-propos-du-format-de-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧩 À propos du format de commit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pourquoi-utiliser-commitly" class="md-nav__link">
+    <span class="md-ellipsis">
+      💡 Pourquoi utiliser Commitly ?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#licence" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Licence
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h2 id="le-probleme-le-syndrome-du-commit-vide">🧠 Le Problème : le syndrome du commit vide<a class="headerlink" href="#le-probleme-le-syndrome-du-commit-vide" title="Permanent link">&para;</a></h2>
+<p><img alt="illustration du vide" src="https://cdn.jsdelivr.net/gh/Tostenn/Commitly/images/vide.jpeg" /></p>
+<p>Vous venez de finir une session intense de développement. Vous exécutez fièrement :</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span><span class="s2">&quot;&quot;</span>
+</code></pre></div>
+<p>Et là… le vide.</p>
+<p>Votre curseur clignote, les guillemets sont vides, <strong>aucune idée</strong> ne vient. Comment résumer proprement ce que vous venez de faire ? Comment respecter les conventions de commit ? Et ce ticket, faut-il le mentionner ? Où ? Comment ?</p>
+<p>C’est là que <strong>Commitly</strong> entre en jeu.</p>
+<hr />
+<h1 id="commitly-cest-quoi">🚀 Commitly, c’est quoi ?<a class="headerlink" href="#commitly-cest-quoi" title="Permanent link">&para;</a></h1>
+<p><strong>Commitly</strong> est une bibliothèque Python qui utilise l’intelligence artificielle pour générer automatiquement un <strong>message de commit</strong> clair et structuré à partir des changements que vous avez mis en cache (<code>git diff --cached</code>).</p>
+<p>Fini le syndrome du commit vide. Commitly vous propose un message ou <strong>plusieurs commits factorisés</strong>, contextualisés, multilingues, et conformes à vos standards d’équipe.</p>
+<hr />
+<h2 id="installation">📦 Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>Installez Commitly depuis PyPI :</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>commitly
+</code></pre></div>
+<blockquote>
+<p>Assurez-vous d’avoir <a href="https://git-scm.com/">Git</a> installé et correctement configuré.</p>
+</blockquote>
+<hr />
+<h2 id="fonctionnalites-principales">⚙️ Fonctionnalités principales<a class="headerlink" href="#fonctionnalites-principales" title="Permanent link">&para;</a></h2>
+<h3 id="__init__modelgpt_4o_mini-file_tempcommittxt-langfr">🔹 <code>__init__(model=gpt_4o_mini, file_temp="commit.txt", lang="fr")</code><a class="headerlink" href="#__init__modelgpt_4o_mini-file_tempcommittxt-langfr" title="Permanent link">&para;</a></h3>
+<p>Crée une instance de Commitly avec :</p>
+<ul>
+<li><code>model</code> : modèle IA utilisé (par défaut <code>gpt_4o_mini</code> via <a href="https://github.com/xtekky/gpt4free">g4f</a>).</li>
+<li><code>file_temp</code> : nom du fichier temporaire pour enregistrer le message.</li>
+<li><code>lang</code> : langue de génération (<code>fr</code> ou <code>en</code>).</li>
+</ul>
+<hr />
+<h3 id="addfile-str-bool">🔹 <code>add(file: str) -&gt; bool</code><a class="headerlink" href="#addfile-str-bool" title="Permanent link">&para;</a></h3>
+<p>Ajoute un fichier à la zone de staging Git.</p>
+<div class="highlight"><pre><span></span><code><span class="n">commitly</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;app/models/user.py&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="generate_commit_message-dict-listdict">🔹 <code>generate_commit_message(...) -&gt; dict | List[dict]</code><a class="headerlink" href="#generate_commit_message-dict-listdict" title="Permanent link">&para;</a></h3>
+<p>Génère automatiquement <strong>un ou plusieurs messages de commit</strong> à partir du <code>diff</code> en cache.</p>
+<p>Paramètres :</p>
+<ul>
+<li><code>style_commit</code>, <code>format_commit</code>, <code>recommandation_commit</code> : personnalisation du style et des consignes.</li>
+<li><code>ticket</code> : identifiant de ticket à inclure dans le pied du message.</li>
+<li><code>fact</code> (<strong>booléen</strong>) : active la <strong>factorisation intelligente</strong> du diff en plusieurs commits logiques.</li>
+</ul>
+<blockquote>
+<p>⚠️ Lève une <code>DiffEmptyException</code> si aucun changement n’est détecté dans la zone de staging.</p>
+</blockquote>
+<hr />
+<h3 id="save_message_to_filemessage-str-bool">🔹 <code>save_message_to_file(message: str) -&gt; bool</code><a class="headerlink" href="#save_message_to_filemessage-str-bool" title="Permanent link">&para;</a></h3>
+<p>Sauvegarde un message généré dans le fichier temporaire.</p>
+<hr />
+<h3 id="commit-bool">🔹 <code>commit() -&gt; bool</code><a class="headerlink" href="#commit-bool" title="Permanent link">&para;</a></h3>
+<p>Exécute un commit avec le message enregistré dans le fichier temporaire, puis le supprime.</p>
+<hr />
+<h3 id="push">🔹 <code>push()</code><a class="headerlink" href="#push" title="Permanent link">&para;</a></h3>
+<p>Pousse les changements vers le dépôt distant.</p>
+<hr />
+<h3 id="unstagefile-str">🔹 <code>unstage(file: str)</code><a class="headerlink" href="#unstagefile-str" title="Permanent link">&para;</a></h3>
+<p>Retire un fichier de la zone de staging (<code>git reset &lt;file&gt;</code>).</p>
+<hr />
+<h3 id="file_stage-liststr">🔹 <code>file_stage() -&gt; List[str]</code><a class="headerlink" href="#file_stage-liststr" title="Permanent link">&para;</a></h3>
+<p>Retourne la liste des fichiers actuellement en staging (<code>git diff --cached --name-only</code>).</p>
+<hr />
+<h3 id="_run_cmdcmd-str-return_code-bool-false">🔹 <code>_run_cmd(cmd: str, return_code: bool = False)</code><a class="headerlink" href="#_run_cmdcmd-str-return_code-bool-false" title="Permanent link">&para;</a></h3>
+<p>Méthode interne pour exécuter des commandes shell.</p>
+<hr />
+<h2 id="exemple-complet">🧪 Exemple complet<a class="headerlink" href="#exemple-complet" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">commitly.commitly</span> <span class="kn">import</span> <span class="n">Commitly</span>
+
+<span class="n">commitly</span> <span class="o">=</span> <span class="n">Commitly</span><span class="p">()</span>
+
+<span class="c1"># Mise en cache d’un fichier</span>
+<span class="n">commitly</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;main.py&quot;</span><span class="p">)</span>
+
+<span class="c1"># Génération d’un message unique avec ticket</span>
+<span class="n">message</span> <span class="o">=</span> <span class="n">commitly</span><span class="o">.</span><span class="n">generate_commit_message</span><span class="p">(</span><span class="n">ticket</span><span class="o">=</span><span class="s2">&quot;#42&quot;</span><span class="p">)</span>
+
+<span class="c1"># Sauvegarde puis commit</span>
+<span class="n">commitly</span><span class="o">.</span><span class="n">save_message_to_file</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">&#39;commit&#39;</span><span class="p">])</span>
+<span class="n">commitly</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="n">commitly</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h2 id="exemple-avec-factorisation-intelligente">🧠 Exemple avec <strong>factorisation intelligente</strong><a class="headerlink" href="#exemple-avec-factorisation-intelligente" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">messages</span> <span class="o">=</span> <span class="n">commitly</span><span class="o">.</span><span class="n">generate_commit_message</span><span class="p">(</span><span class="n">ticket</span><span class="o">=</span><span class="s2">&quot;#42&quot;</span><span class="p">,</span> <span class="n">fact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;commit&quot;</span><span class="p">],</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p>Exemple de sortie :</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;commit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat[core]: ajout de la gestion des rôles dans l’authentification&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;files&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;auth/roles.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;auth/utils.py&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;commit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;docs: mise à jour du guide d’installation&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;files&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;docs/setup.md&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+<hr />
+<h2 id="a-propos-du-format-de-commit">🧩 À propos du format de commit<a class="headerlink" href="#a-propos-du-format-de-commit" title="Permanent link">&para;</a></h2>
+<p>Les messages générés suivent cette structure standard :</p>
+<div class="highlight"><pre><span></span><code>&lt;type&gt;[étendue optionnelle]: &lt;description&gt;
+
+[corps optionnel]
+
+[pied optionnel]  ← ticket ici (#1234)
+</code></pre></div>
+<p>Types classiques :</p>
+<ul>
+<li><code>feat</code> : nouvelle fonctionnalité</li>
+<li><code>fix</code> : correction de bug</li>
+<li><code>docs</code> : documentation</li>
+<li><code>refactor</code> : amélioration sans changement de comportement</li>
+<li><code>chore</code> : tâches techniques ou maintenance</li>
+</ul>
+<hr />
+<h2 id="pourquoi-utiliser-commitly">💡 Pourquoi utiliser Commitly ?<a class="headerlink" href="#pourquoi-utiliser-commitly" title="Permanent link">&para;</a></h2>
+<p>✅ Évite les commits génériques type “wip”<br />
+✅ Uniformise la convention de message au sein de l’équipe<br />
+✅ Génère des commits factorisés <strong>sans duplication de fichiers</strong><br />
+✅ Multilingue (fr/en)<br />
+✅ Intégration facile dans les workflows Git existants</p>
+<hr />
+<h2 id="licence">📋 Licence<a class="headerlink" href="#licence" title="Permanent link">&para;</a></h2>
+<p>MIT © 2025 Kouya Chance Boman Tosten</p>
+<hr />
+<blockquote>
+<p>Fini le syndrome du commit vide. Laissez <strong>Commitly</strong> écrire l’histoire de votre code, commit après commit.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.indexes", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
