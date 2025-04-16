@@ -1,7 +1,3 @@
-Voici la version anglaise de ton README pour **Commitly**, fidèle à la version française mais adaptée avec fluidité :
-
----
-
 ## 🧠 The Problem: The Empty Commit Syndrome
 
 ![empty commit](https://cdn.jsdelivr.net/gh/Tostenn/Commitly/images/vide.jpeg)
@@ -199,7 +195,3 @@ MIT © 2025 Kouya Chance Boman Tosten
 ---
 
 > Stop staring at your empty commit. Let **Commitly** tell the story of your code — one commit at a time.
-
----
-
-Souhaites-tu que je t’aide à structurer le `README.md` dans ton dépôt GitHub ? Ou peut-être créer une documentation en ligne avec `mkdocs` ou `docsify` ?
