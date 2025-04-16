@@ -1,6 +1,7 @@
+
 ## 🧠 Le Problème : le syndrome du commit vide
 
-![ullustration du vide](https://cdn.jsdelivr.net/gh/Tostenn/Commitly/images/vide.jpeg)
+![illustration du vide](https://cdn.jsdelivr.net/gh/Tostenn/Commitly/images/vide.jpeg)
 
 Vous venez de finir une session intense de développement. Vous exécutez fièrement :
 
@@ -19,12 +20,11 @@ C’est là que **Commitly** entre en jeu.
 
 # 🚀 Commitly, c’est quoi ?
 
-Commitly est une bibliothèque Python qui utilise l’intelligence artificielle pour générer automatiquement un **message de commit** bien structuré à partir des changements que vous avez mis en cache (`git diff --cached`).
+**Commitly** est une bibliothèque Python qui utilise l’intelligence artificielle pour générer automatiquement un **message de commit** clair et structuré à partir des changements que vous avez mis en cache (`git diff --cached`).
 
-Fini le syndrome du commit vide. Commitly vous propose un message clair, contextualisé, avec ou sans ticket, en français ou en anglais, et conforme à vos standards d’équipe.
+Fini le syndrome du commit vide. Commitly vous propose un message ou **plusieurs commits factorisés**, contextualisés, multilingues, et conformes à vos standards d’équipe.
 
 ---
-
 
 ## 📦 Installation
 
@@ -38,95 +38,75 @@ pip install commitly
 
 ---
 
-## ⚙️ Fonctionnalités
+## ⚙️ Fonctionnalités principales
 
-### `__init__(model=gpt_4o_mini, file_temp="commit.txt", lang="fr")`
+### 🔹 `__init__(model=gpt_4o_mini, file_temp="commit.txt", lang="fr")`
 
-Crée une instance de Commitly.
+Crée une instance de Commitly avec :
 
-- `model` : modèle IA à utiliser (par défaut `gpt_4o_mini` via la bibliothèque [g4f](https://github.com/xtekky/gpt4free)).
-- `file_temp` : nom du fichier temporaire dans lequel le message sera enregistré pour le commit Git.
-- `lang` : langue de génération des messages (`fr` ou `en`).
+- `model` : modèle IA utilisé (par défaut `gpt_4o_mini` via [g4f](https://github.com/xtekky/gpt4free)).
+- `file_temp` : nom du fichier temporaire pour enregistrer le message.
+- `lang` : langue de génération (`fr` ou `en`).
 
 ---
 
-### `add(file: str) -> bool`
+### 🔹 `add(file: str) -> bool`
 
-Ajoute un fichier spécifique à la zone de staging Git.
+Ajoute un fichier à la zone de staging Git.
 
 ```python
 commitly.add("app/models/user.py")
 ```
 
-Equivalent à :
+---
 
-```bash
-git add app/models/user.py
-```
+### 🔹 `generate_commit_message(...) -> dict | List[dict]`
+
+Génère automatiquement **un ou plusieurs messages de commit** à partir du `diff` en cache.
+
+Paramètres :
+
+- `style_commit`, `format_commit`, `recommandation_commit` : personnalisation du style et des consignes.
+- `ticket` : identifiant de ticket à inclure dans le pied du message.
+- `fact` (**booléen**) : active la **factorisation intelligente** du diff en plusieurs commits logiques.
+
+> ⚠️ Lève une `DiffEmptyException` si aucun changement n’est détecté dans la zone de staging.
 
 ---
 
-### `generate_commit_message(style_commit=None, format_commit=None, recommandation_commit=None, ticket=None) -> str`
+### 🔹 `save_message_to_file(message: str) -> bool`
 
-Génère automatiquement le message de commit à partir du diff actuel (`git diff --cached`).
-
-- `style_commit` : personnalisation du style (type, étendue, etc.).
-- `format_commit` : format général attendu du message.
-- `recommandation_commit` : recommandations pour la rédaction.
-- `ticket` : un identifiant de ticket optionnel à inclure dans le pied du message.
-
-> **⚠️ Important** : Si aucun changement n’est en cache, cette méthode lève une exception `DiffEmptyException`.
+Sauvegarde un message généré dans le fichier temporaire.
 
 ---
 
-### `save_message_to_file(message: str) -> bool`
+### 🔹 `commit() -> bool`
 
-Sauvegarde un message de commit généré dans le fichier temporaire défini (par défaut : `commit.txt`).
-
-```python
-commitly.save_message_to_file(message)
-```
-
-Utile pour utiliser ensuite ce fichier dans une commande `git commit`.
+Exécute un commit avec le message enregistré dans le fichier temporaire, puis le supprime.
 
 ---
 
-### `commit() -> bool`
+### 🔹 `push()`
 
-Effectue le commit en utilisant le message contenu dans le fichier temporaire. Une fois le commit effectué, le fichier est automatiquement supprimé.
-
-```python
-commitly.commit()
-```
+Pousse les changements vers le dépôt distant.
 
 ---
 
-### `push()`
+### 🔹 `unstage(file: str)`
 
-Exécute une commande `git push` pour envoyer vos modifications vers le dépôt distant.
-
-```python
-commitly.push()
-```
+Retire un fichier de la zone de staging (`git reset <file>`).
 
 ---
 
-### `unstage(file: str)`
+### 🔹 `file_stage() -> List[str]`
 
-Retire un fichier de la zone de staging (l’équivalent de `git reset <file>`).
-
-```python
-commitly.unstage("README.md")
-```
+Retourne la liste des fichiers actuellement en staging (`git diff --cached --name-only`).
 
 ---
 
-### `_run_cmd(cmd: str, return_code: bool = False)`
+### 🔹 `_run_cmd(cmd: str, return_code: bool = False)`
 
-Méthode interne utilisée pour exécuter des commandes shell. Elle peut retourner soit :
-
-- la sortie de la commande (`stdout`)
-- le code de retour (`0` ou `1`) si `return_code=True`
+Méthode interne pour exécuter des commandes shell.
 
 ---
 
@@ -136,25 +116,49 @@ Méthode interne utilisée pour exécuter des commandes shell. Elle peut retourn
 from commitly.commitly import Commitly
 
 commitly = Commitly()
+
+# Mise en cache d’un fichier
 commitly.add("main.py")
+
+# Génération d’un message unique avec ticket
 message = commitly.generate_commit_message(ticket="#42")
-commitly.save_message_to_file(message)
+
+# Sauvegarde puis commit
+commitly.save_message_to_file(message['commit'])
 commitly.commit()
 commitly.push()
 ```
 
 ---
 
-## 📸 Démo visuelle
+## 🧠 Exemple avec **factorisation intelligente**
 
-![Exemple complet](https://cdn.jsdelivr.net/gh/Tostenn/Commitly/images/exemple-1.png)
+```python
+messages = commitly.generate_commit_message(ticket="#42", fact=True)
+for item in messages:
+    print(item["commit"], ":", item["files"])
+```
 
+Exemple de sortie :
+
+```json
+[
+    {
+        "commit": "feat[core]: ajout de la gestion des rôles dans l’authentification",
+        "files": ["auth/roles.py", "auth/utils.py"]
+    },
+    {
+        "commit": "docs: mise à jour du guide d’installation",
+        "files": ["docs/setup.md"]
+    }
+]
+```
 
 ---
 
 ## 🧩 À propos du format de commit
 
-Le message généré suit cette structure :
+Les messages générés suivent cette structure standard :
 
 ```text
 <type>[étendue optionnelle]: <description>
@@ -164,12 +168,23 @@ Le message généré suit cette structure :
 [pied optionnel]  ← ticket ici (#1234)
 ```
 
-Exemples de type :
+Types classiques :
+
 - `feat` : nouvelle fonctionnalité
 - `fix` : correction de bug
 - `docs` : documentation
-- `refactor` : amélioration du code sans changement de comportement
-- `chore` : tâches annexes (maintenance, mise à jour, etc.)
+- `refactor` : amélioration sans changement de comportement
+- `chore` : tâches techniques ou maintenance
+
+---
+
+## 💡 Pourquoi utiliser Commitly ?
+
+✅ Évite les commits génériques type “wip”  
+✅ Uniformise la convention de message au sein de l’équipe  
+✅ Génère des commits factorisés **sans duplication de fichiers**  
+✅ Multilingue (fr/en)  
+✅ Intégration facile dans les workflows Git existants
 
 ---
 
@@ -179,4 +194,5 @@ MIT © 2025 Kouya Chance Boman Tosten
 
 ---
 
-> Fini le syndrome du commit vide. Laissez **Commitly** écrire l’histoire de votre code.
+> Fini le syndrome du commit vide. Laissez **Commitly** écrire l’histoire de votre code, commit après commit.
+
