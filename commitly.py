@@ -83,7 +83,14 @@ class Commitly:
                 "commit": content,
                 'files': self.file_stage()
             }
-        else: content = loads(content)
+        else: 
+            try:
+                content = loads(content)
+            except: 
+                content = {
+                    "commit": content,
+                    'files': self.file_stage()
+                }
             
         return content
 
