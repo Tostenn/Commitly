@@ -58,7 +58,7 @@ class Commitly:
             recommandation_commit: str = None, 
             ticket: str = None,
             fact: bool = False
-            ) -> str:
+            ) -> dict|list[dict]:
         """
         Generate the commit message using the AI model based on current staged diff.
         """
