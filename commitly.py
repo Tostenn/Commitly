@@ -1,9 +1,16 @@
 from g4f.client import Client
 from g4f.models import gpt_4o_mini
-from prompt import PROMPT, STYLE_COMMIT, FORMAT_COMMIT, RECOMMANDATION
+from prompt import (
+    PROMPT,
+    PROMPT_FACT,
+    STYLE_COMMIT,
+    FORMAT_COMMIT,
+    RECOMMANDATION
+)
 from subprocess import run
 from pathlib import Path
 from exceptions.diffEmptyException import DiffEmptyException
+from json import loads
 
 
 class Commitly:
@@ -20,7 +27,12 @@ class Commitly:
         self.file_temp = Path(file_temp)
         self.lang = lang
 
-    def get_prompt(self, style_commit: str = None, format_commit: str = None, recommandation_commit: str = None) -> str:
+    def get_prompt(self, 
+            style_commit: str = None,
+            format_commit: str = None,
+            recommandation_commit: str = None,
+            fact:bool=False
+            ) -> str:
         """
         Format the system prompt using commit style, format, and custom recommendations.
         """
@@ -28,7 +40,7 @@ class Commitly:
         format_commit = format_commit or FORMAT_COMMIT
         recommandation_commit = recommandation_commit or RECOMMANDATION
 
-        return PROMPT.format(
+        return (PROMPT_FACT if fact else PROMPT).format(
             STYLE_COMMIT=style_commit,
             FORMAT_COMMIT=format_commit,
             RECOMMANDATION=recommandation_commit
@@ -40,7 +52,13 @@ class Commitly:
         """
         return self._run_cmd(f"git add {file}", return_code=True) == 0
 
-    def generate_commit_message(self, style_commit: str = None, format_commit: str = None, recommandation_commit: str = None, ticket: str = None) -> str:
+    def generate_commit_message(self, 
+            style_commit: str = None, 
+            format_commit: str = None, 
+            recommandation_commit: str = None, 
+            ticket: str = None,
+            fact: bool = False
+            ) -> str:
         """
         Generate the commit message using the AI model based on current staged diff.
         """
@@ -52,13 +70,23 @@ class Commitly:
         response = self.client.chat.completions.create(
             model=self.model,
             messages=[
-                {"role": "system", "content": self.get_prompt(style_commit, format_commit, recommandation_commit)},
-                {"role": "user", "content": f"""{{ "diff": "{diff}", "ticket": "{ticket}", "langue": "{self.lang}" }}"""},
+                {"role": "system", "content": self.get_prompt(style_commit, format_commit, recommandation_commit, fact)},
+                {"role": "user", "content": f"""{{ "diff": "{diff}", {f"ticket {ticket}," if ticket else ''} "langue": "{self.lang}" }}"""},
             ],
             web_search=False
         )
-
-        return response.choices[0].message.content.strip()
+        
+        content = response.choices[0].message.content.strip()
+        print(content)
+        exit()
+        if not fact:
+            content = {
+                "commit": content,
+                'files': self.file_stage()
+            }
+        else: content = loads(content)
+            
+        return content
 
     def save_message_to_file(self, message: str) -> bool:
         """
@@ -103,3 +131,9 @@ class Commitly:
         Unstage a file (remove from staging area).
         """
         self._run_cmd(f"git reset {file}")
+        
+    def file_stage(self, ):
+        """
+        file stage 
+        """
+        return self._run_cmd(f"git diff --name-only --cached").strip().splitlines()
