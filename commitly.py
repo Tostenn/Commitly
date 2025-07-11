@@ -23,9 +23,10 @@ class Commitly:
         """
         Initialize the Commitly client with a model and temporary file to store the message.
         """
-        self.client = Client()
-        self.file_temp = Path(file_temp)
-        self.lang = lang
+        self.file_temp = Path(file_temp) # Temporary file to store the commit message
+        self.lang = lang # Language of the commit message
+        
+        # API
         self.api_url = 'https://commitly.onrender.com/commit'
         self.headers = {
             'Content-Type': 'application/json',
