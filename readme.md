@@ -11,7 +11,7 @@ git commit ""
 
 And then… nothing.
 
-The cursor blinks. The quotes are empty. **No idea** what to write.  
+The cursor blinks. The quotes are empty. **No idea** what to write.
 How do you summarize what you just did? How do you follow commit conventions? Should you mention the ticket? Where? How?
 
 That’s where **Commitly** comes in.
@@ -40,13 +40,12 @@ pip install commitly
 
 ## ⚙️ Main Features
 
-### 🔹 `__init__(model=gpt_4o_mini, file_temp="commit.txt", lang="en")`
+### 🔹 `__init__(file_temp="commit.txt", lang="fr")`
 
 Creates a Commitly instance:
 
-- `model`: AI model to use (default is `gpt_4o_mini` via [g4f](https://github.com/xtekky/gpt4free)).
-- `file_temp`: temporary file name to save the commit message.
-- `lang`: output language (`en` or `fr`).
+* `file_temp`: Temporary file name to save the commit message.
+* `lang`: Output language (`en` or `fr`). Default is French.
 
 ---
 
@@ -66,9 +65,9 @@ Generates **one or more commit messages** from the current staged diff.
 
 Parameters:
 
-- `style_commit`, `format_commit`, `recommandation_commit`: customize commit style and instructions.
-- `ticket`: ticket ID to include in the footer of the commit.
-- `fact` (**bool**): enables **smart factorization** to split the diff into multiple coherent commits.
+* `style_commit`, `format_commit`, `recommandation_commit`: Customize commit style and rules.
+* `ticket`: Ticket ID to include in the commit.
+* `fact` (**bool**): Enables **smart factorization** to split the diff into multiple coherent commits.
 
 > ⚠️ Raises a `DiffEmptyException` if no changes are detected in staging.
 
@@ -76,25 +75,25 @@ Parameters:
 
 ### 🔹 `save_message_to_file(message: str) -> bool`
 
-Saves a generated commit message to the temporary file.
+Saves the generated commit message to the temporary file.
 
 ---
 
 ### 🔹 `commit() -> bool`
 
-Performs a Git commit using the message saved in the temp file and deletes it afterward.
+Performs a Git commit using the saved message from the temporary file and deletes it afterward.
 
 ---
 
 ### 🔹 `push()`
 
-Pushes your changes to the remote repository.
+Pushes your latest commit to the remote repository.
 
 ---
 
 ### 🔹 `unstage(file: str)`
 
-Removes a file from the staging area (`git reset <file>`).
+Removes a file from the Git staging area (`git reset <file>`).
 
 ---
 
@@ -124,7 +123,7 @@ commitly.add("main.py")
 message = commitly.generate_commit_message(ticket="#42")
 
 # Save it and commit
-commitly.save_message_to_file(message)
+commitly.save_message_to_file(message["commit"])
 commitly.commit()
 commitly.push()
 ```
@@ -170,20 +169,20 @@ Generated messages follow a conventional structure:
 
 Common types:
 
-- `feat`: a new feature
-- `fix`: a bug fix
-- `docs`: documentation-only changes
-- `refactor`: code changes that neither fix a bug nor add a feature
-- `chore`: other routine tasks like config or CI changes
+* `feat`: a new feature
+* `fix`: a bug fix
+* `docs`: documentation-only changes
+* `refactor`: code changes that neither fix a bug nor add a feature
+* `chore`: other routine tasks like config or CI changes
 
 ---
 
 ## 💡 Why use Commitly?
 
-✅ Say goodbye to “wip” commits  
-✅ Enforce a consistent commit standard across your team  
-✅ Generate **logical, factorized commits** from complex diffs  
-✅ Multilingual support (EN/FR)  
+✅ Say goodbye to “wip” commits
+✅ Enforce a consistent commit standard across your team
+✅ Generate **logical, factorized commits** from complex diffs
+✅ Multilingual support (EN/FR)
 ✅ Easy integration into any Git workflow
 
 ---
