@@ -34,28 +34,17 @@ if platform == 'win32':
 
 class MessageService:
     DEFAULT_MODEL = models.gpt_4o_mini
-    MODELS = [
-        models.gpt_4o_mini,
-        models.gpt_4o,
-        models.gpt_4,
-        models.gpt_3_5_turbo,
-        models.gemini_1_5_flash,
-    ]
-
+    
     client = Client()
 
     @classmethod
-    def get_model(cls, model_name):
-        return choice(cls.MODELS) if model_name else cls.DEFAULT_MODEL
-
-    @classmethod
-    def get_response(cls, prompt, content, model_name=None):
+    def get_response(cls, prompt, content):
         if not content:
             return {"error": "Contenu manquant."}, 400
 
         try:
             response = cls.client.chat.completions.create(
-                model=cls.get_model(model_name),
+                model=cls.DEFAULT_MODEL,
                 messages=[
                     {"role": "system", "content": prompt},
                     {"role": "user", "content": dumps(content)}
@@ -79,8 +68,7 @@ class API:
             data = request.json
             response = MessageService.get_response(
                 prompt=data.get('prompt'),
-                content=data.get('content'),
-                model_name=data.get('model'),
+                content=data.get('content')
             )
             return jsonify(response[0]), response[1]
 
