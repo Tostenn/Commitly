@@ -11,6 +11,7 @@ from subprocess import run
 from pathlib import Path
 from exceptions.diffEmptyException import DiffEmptyException
 from json import loads
+from requests import post
 
 
 class Commitly:
@@ -26,6 +27,7 @@ class Commitly:
         self.model = model
         self.file_temp = Path(file_temp)
         self.lang = lang
+        self.api_url = 'http://localhost:5050/commit'
 
     def get_prompt(self, 
             style_commit: str = None,
@@ -66,17 +68,13 @@ class Commitly:
 
         if not diff.strip():
             raise DiffEmptyException("No changes found in staged files.")
-
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": self.get_prompt(style_commit, format_commit, recommandation_commit, fact)},
-                {"role": "user", "content": f"""{{ "diff": "{diff}", {f"ticket {ticket}," if ticket else ''} "langue": "{self.lang}" }}"""},
-            ],
-            web_search=False
-        )
         
-        content = response.choices[0].message.content.strip()
+        data = {
+            'prompt': self.get_prompt(style_commit, format_commit, recommandation_commit, fact),
+            'content': f"""{{ "diff": "{diff}", {f"ticket {ticket}," if ticket else ''} "langue": "{self.lang}" }}"""
+        }
+        
+        content = post(self.api_url, json=data).json()['response']
 
         if not fact:
             content = {
