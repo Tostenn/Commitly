@@ -1,5 +1,5 @@
 __pycache__/
-*.txt
+/*.txt
 test*.*
 har_and_cookies/
 pip/

@@ -85,9 +85,9 @@ class API:
             return jsonify(response[0]), response[1]
 
     def run(self):
-        # port = int(getenv("PORT", 10000))
-        # self.app.run(host="0.0.0.0", port=port)
-        self.app.run(port=5050)
+        port = int(getenv("PORT", 10000))
+        self.app.run(host="0.0.0.0", port=port)
+        # self.app.run(port=5050)
 
 
 api = API()
