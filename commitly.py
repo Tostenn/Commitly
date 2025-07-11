@@ -27,7 +27,11 @@ class Commitly:
         self.model = model
         self.file_temp = Path(file_temp)
         self.lang = lang
-        self.api_url = 'http://localhost:5050/commit'
+        self.api_url = 'https://commitly.onrender.com/commit'
+        self.headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
 
     def get_prompt(self, 
             style_commit: str = None,
