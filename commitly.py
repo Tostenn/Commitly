@@ -1,5 +1,3 @@
-from g4f.client import Client
-from g4f.models import gpt_4o_mini
 from prompt import (
     PROMPT,
     PROMPT_FACT,
@@ -78,7 +76,7 @@ class Commitly:
             'content': f"""{{ "diff": "{diff}", {f"ticket {ticket}," if ticket else ''} "langue": "{self.lang}" }}"""
         }
         
-        content = post(self.api_url, json=data).json()['response']
+        content = post(self.api_url, json=data).json()['response'].strip()
 
         if not fact:
             content = {
