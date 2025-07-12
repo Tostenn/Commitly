@@ -56,6 +56,34 @@ class Commitly:
         """
         return self._run_cmd(f"git add {file}", return_code=True) == 0
 
+    def get_msg_commit(self,
+        style_commit: str = None, 
+        format_commit: str = None, 
+        recommandation_commit: str = None, 
+        ticket: str = None,
+        fact: bool = False
+    ) -> str:
+        
+        """
+        Generate the commit message using the AI model based on current staged diff.
+        """
+        diff = self._run_cmd("git diff --cached")
+        
+        data = {
+            'prompt': self.get_prompt(style_commit, format_commit, recommandation_commit, fact),
+            'content': f"""{{ "diff": "{diff}", {f"ticket {ticket}," if ticket else ''} "langue": "{self.lang}" }}"""
+        }
+            
+        content = post(self.api_url, json=data).json()['response'].strip()
+        return content
+
+    def retry(self, fn, *args, **kwargs):
+        for _ in range(3):
+            try:
+                return fn(*args, **kwargs)
+            except Exception as e:
+                print(f"Error generating commit message: {e}")
+
     def generate_commit_message(self, 
             style_commit: str = None, 
             format_commit: str = None, 
@@ -71,13 +99,8 @@ class Commitly:
         if not diff.strip():
             raise DiffEmptyException("No changes found in staged files.")
         
-        data = {
-            'prompt': self.get_prompt(style_commit, format_commit, recommandation_commit, fact),
-            'content': f"""{{ "diff": "{diff}", {f"ticket {ticket}," if ticket else ''} "langue": "{self.lang}" }}"""
-        }
+        content = self.retry(self.get_msg_commit, style_commit, format_commit, recommandation_commit, ticket, fact)
         
-        content = post(self.api_url, json=data).json()['response'].strip()
-
         if not fact:
             content = {
                 "commit": content,
