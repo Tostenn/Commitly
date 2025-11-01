@@ -39,9 +39,10 @@ class MessageService:
 
     @classmethod
     def get_response(cls, prompt, content):
+        print(f'{'log':^30}')
         if not content:
             return {"error": "Contenu manquant."}, 400
-
+        print(content)
         try:
             response = cls.client.chat.completions.create(
                 model=cls.DEFAULT_MODEL,
@@ -50,6 +51,7 @@ class MessageService:
                     {"role": "user", "content": dumps(content)}
                 ]
             )
+            print(response.choices[0].message.content)
             return {"response": response.choices[0].message.content}, 200
 
         except Exception as e:
@@ -66,8 +68,6 @@ class API:
         @self.app.route('/commit', methods=['POST'])
         def commit():
             data = request.json
-            print(f'{'log':^30}')
-            print(data)
             response = MessageService.get_response(
                 prompt=data.get('prompt'),
                 content=data.get('content')
