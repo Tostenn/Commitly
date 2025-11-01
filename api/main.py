@@ -66,6 +66,8 @@ class API:
         @self.app.route('/commit', methods=['POST'])
         def commit():
             data = request.json
+            print(f'{'log':^30}')
+            print(data)
             response = MessageService.get_response(
                 prompt=data.get('prompt'),
                 content=data.get('content')
