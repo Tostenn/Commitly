@@ -17,7 +17,12 @@ class Commitly:
     Commitly automatically generates a commit message based on the current staged changes (diff).
     """
 
-    def __init__(self, file_temp="commit.txt", lang="fr"):
+    def __init__(
+        self,
+        file_temp:str="commit.txt",
+        lang:str="fr",
+        url_api:str='https://commitly.onrender.com/commit'
+    ):
         """
         Initialize the Commitly client with a model and temporary file to store the message.
         """
@@ -25,7 +30,7 @@ class Commitly:
         self.lang = lang # Language of the commit message
         
         # API
-        self.api_url = 'https://commitly.onrender.com/commit'
+        self.api_url = url_api
         self.headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
