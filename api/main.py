@@ -33,7 +33,7 @@ if platform == 'win32':
 
 
 class MessageService:
-    DEFAULT_MODEL = models.gpt_4o_mini
+    DEFAULT_MODEL = models.gpt_4_1_mini
     
     client = Client()
 
@@ -41,6 +41,7 @@ class MessageService:
     def get_response(cls, prompt, content):
         if not content:
             return {"error": "Contenu manquant."}, 400
+
         try:
             response = cls.client.chat.completions.create(
                 model=cls.DEFAULT_MODEL,
@@ -49,12 +50,9 @@ class MessageService:
                     {"role": "user", "content": dumps(content)}
                 ]
             )
-            print(f'{'log':^30}')
-            print(response.choices[0])
             return {"response": response.choices[0].message.content}, 200
 
         except Exception as e:
-            print(f'{'error':^30}')
             logging.error(f"[MessageService] Erreur: {str(e)}")
             return {"error": "Erreur lors de la génération de réponse."}, 500
 
