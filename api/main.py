@@ -50,7 +50,7 @@ class MessageService:
                 ]
             )
             print(f'{'log':^30}')
-            print(response)
+            print(response.choices[0])
             return {"response": response.choices[0].message.content}, 200
 
         except Exception as e:
