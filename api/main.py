@@ -33,7 +33,7 @@ if platform == 'win32':
 
 
 class MessageService:
-    DEFAULT_MODEL = models.gpt_4_5
+    DEFAULT_MODEL = models.gpt_4o
     
     client = Client()
 
