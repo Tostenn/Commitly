@@ -33,7 +33,7 @@ if platform == 'win32':
 
 
 class MessageService:
-    DEFAULT_MODEL = models.gemini_1_5_flash
+    DEFAULT_MODEL = models.gpt-4o-mini
     
     client = Client()
 
